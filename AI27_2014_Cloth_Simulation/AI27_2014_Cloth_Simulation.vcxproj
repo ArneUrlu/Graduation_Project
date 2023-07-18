@@ -143,6 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="includes\include\imgui\imgui.cpp" />
+    <ClCompile Include="includes\include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="includes\include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="includes\include\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="includes\include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="includes\include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="includes\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Application.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +159,15 @@
     <ClInclude Include="includes\include\glad\glad.h" />
     <ClInclude Include="includes\include\GLFW\glfw3.h" />
     <ClInclude Include="includes\include\GLFW\glfw3native.h" />
+    <ClInclude Include="includes\include\imgui\imconfig.h" />
+    <ClInclude Include="includes\include\imgui\imgui.h" />
+    <ClInclude Include="includes\include\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="includes\include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="includes\include\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="includes\include\imgui\imgui_internal.h" />
+    <ClInclude Include="includes\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="includes\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="includes\include\imgui\imstb_truetype.h" />
     <ClInclude Include="includes\include\KHR\khrplatform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
