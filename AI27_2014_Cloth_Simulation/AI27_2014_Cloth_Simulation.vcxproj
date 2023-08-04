@@ -151,6 +151,7 @@
     <ClCompile Include="includes\include\imgui\imgui_tables.cpp" />
     <ClCompile Include="includes\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\glad.c" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="includes\lib\glfw3.lib" />
