@@ -1,5 +1,10 @@
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\vc142.pdb
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\vc142.idb
+d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\vertexbuffer.obj
+d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\vertexarray.obj
+d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\shader.obj
+d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\renderer.obj
+d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\indexbuffer.obj
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\application.obj
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\imgui_widgets.obj
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\imgui_tables.obj
@@ -9,8 +14,9 @@ d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\img
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\imgui_demo.obj
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\imgui.obj
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\glad.obj
-d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\ai27_2014_cloth_simulation.ilk
+d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\stb_image.obj
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\ai27_2014_cloth_simulation.exe
+d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\ai27_2014_cloth_simulation.ilk
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\ai27_2014_cloth_simulation.pdb
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\ai27_201.03a6d7b8.tlog\cl.command.1.tlog
 d:\diplomski_rad\ai27-2014-cloth-simulation\ai27_2014_cloth_simulation\debug\ai27_201.03a6d7b8.tlog\cl.read.1.tlog
