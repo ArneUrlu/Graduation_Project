@@ -5,6 +5,7 @@
 #include <imgui\imgui_impl_glfw.h>
 #include <glm\glm.hpp>
 #include <glm\ext.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <stdio.h>
 #include <vector>
 #include <cmath>
@@ -73,8 +74,8 @@ int main()
     for (int row = 0; row < clothHeight; ++row) {
         for (int col = 0; col < clothWidth; ++col) {
             float x = static_cast<float>(col) / (clothWidth - 1);
-            float y = static_cast<float>(row) / (clothHeight - 1);
-            float z = 1.0f;
+            float y = 1.0f;
+            float z = static_cast<float>(row) / (clothHeight - 1);
 
             clothVertices.push_back(x);
             clothVertices.push_back(y);
@@ -110,7 +111,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     //GLFW prozor za prikaz
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "AI27-2014 Cloth Simulation", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(800, 800, "AI27-2014 Cloth Simulation", nullptr, nullptr);
     if (!window)
     {
         glfwTerminate();
@@ -128,13 +129,11 @@ int main()
     }
 
     // Inicijalizacija ImGUI
-
-
     ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
-    io.DisplaySize.x = static_cast<float>(1280);
-    io.DisplaySize.y = static_cast<float>(720);
+    io.DisplaySize.x = static_cast<float>(800);
+    io.DisplaySize.y = static_cast<float>(800);
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
@@ -161,7 +160,30 @@ int main()
     Shader sphereShader("src/Basic.shader");
     Shader clothShader("src/Basic.shader");
 
-    Texture sphereTex("include/textures/sphereTexture.png");
+    // SETUP ALL MATRICES FOR DRAWING IN 3D
+
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), 800.0f / 800.0f, 0.1f, 150.0f);
+
+    glm::vec3 cameraPosition = glm::vec3(4.5f, 2.0f, 4.0f);
+    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.6f, 0.0f);
+    glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    glm::mat4 viewMatrix = glm::lookAt(cameraPosition, cameraTarget, upVector);
+
+    glm::vec3 objectPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 objectRotation = glm::vec3(0.0f, glm::radians(90.0f), 0.0f);
+    glm::vec3 objectScale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    glm::mat4 modelMatrix = glm::mat4(1.0f); // Identity matrix
+    modelMatrix = glm::translate(modelMatrix, objectPosition);
+    modelMatrix = glm::rotate(modelMatrix, objectRotation.y, glm::vec3(0, 1, 0));
+    modelMatrix = glm::scale(modelMatrix, objectScale);
+
+    glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * modelMatrix;
+
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -194,27 +216,47 @@ int main()
         }
         ImGui::End();
 
-
-
         // Clear the screen
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         // Render the sphere
         sphereShader.bind();
         sphereShader.SetUniform4f("u_Color", 0.25f, 0.21f, 0.8f, 1.0f);
+        sphereShader.SetUniformMat4("u_MVP", mvpMatrix);
         sphereVAO.bind();
         sphereIndexBuffer.bind();
         glDrawElements(GL_TRIANGLES, sphereIndices.size(), GL_UNSIGNED_INT, nullptr);
-        
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        sphereShader.SetUniform4f("u_Color", 0.1f, 0.21f, 0.8f, 1.0f);
+        glDrawElements(GL_TRIANGLES, sphereIndices.size(), GL_UNSIGNED_INT, nullptr);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        // Push Matrix translate
+        objectPosition = glm::vec3(0.0f, 2.0f, 0.0f);
+        mvpMatrix = projectionMatrix * viewMatrix * glm::translate(glm::mat4(1.0f), objectPosition);
         
 
+        
         // Render the cloth
         clothShader.bind();
-        clothShader.SetUniform4f("u_Color", 0.5f, 0.21f, 0.5f, 1.0f);
+        clothShader.SetUniform4f("u_Color", 0.5f, 0.21f, 0.5f, 1.0f); 
+        clothShader.SetUniformMat4("u_MVP", mvpMatrix);
         clothVAO.bind();
         clothIndexBuffer.bind();
         glDrawElements(GL_TRIANGLES, clothIndices.size(), GL_UNSIGNED_INT, nullptr);
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        clothShader.SetUniform4f("u_Color", 0.3f, 0.21f, 0.5f, 1.0f);
+        glDrawElements(GL_TRIANGLES, clothIndices.size(), GL_UNSIGNED_INT, nullptr);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        // Pop Matrix
+        objectPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+        mvpMatrix = projectionMatrix * viewMatrix * glm::translate(glm::mat4(1.0f), objectPosition);
+        
         
 
         // Apply spring forces
@@ -237,8 +279,6 @@ int main()
         clothShader.unbind();
         
         glfwSwapBuffers(window);
-        
-        
         glfwPollEvents();
     }
 
