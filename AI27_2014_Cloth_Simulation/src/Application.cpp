@@ -8,14 +8,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <stdio.h>
 #include <vector>
-#include <cmath>
-
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
 #include "Renderer.h"
-#include "Texture.h"
 
 
 int main()
@@ -223,14 +220,14 @@ int main()
 
         // Render the sphere
         sphereShader.bind();
-        sphereShader.SetUniform4f("u_Color", 0.25f, 0.21f, 0.8f, 1.0f);
+        sphereShader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
         sphereShader.SetUniformMat4("u_MVP", mvpMatrix);
         sphereVAO.bind();
         sphereIndexBuffer.bind();
         glDrawElements(GL_TRIANGLES, sphereIndices.size(), GL_UNSIGNED_INT, nullptr);
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        sphereShader.SetUniform4f("u_Color", 0.1f, 0.21f, 0.8f, 1.0f);
+        sphereShader.SetUniform4f("u_Color", 0.5f, 0.5f, 0.0f, 1.0f);
         glDrawElements(GL_TRIANGLES, sphereIndices.size(), GL_UNSIGNED_INT, nullptr);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -242,22 +239,20 @@ int main()
         
         // Render the cloth
         clothShader.bind();
-        clothShader.SetUniform4f("u_Color", 0.5f, 0.21f, 0.5f, 1.0f); 
+        clothShader.SetUniform4f("u_Color", 1.0f, 0.0f, 1.0f, 1.0f); 
         clothShader.SetUniformMat4("u_MVP", mvpMatrix);
         clothVAO.bind();
         clothIndexBuffer.bind();
         glDrawElements(GL_TRIANGLES, clothIndices.size(), GL_UNSIGNED_INT, nullptr);
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        clothShader.SetUniform4f("u_Color", 0.3f, 0.21f, 0.5f, 1.0f);
+        clothShader.SetUniform4f("u_Color", 0.5f, 0.0f, 0.5f, 1.0f);
         glDrawElements(GL_TRIANGLES, clothIndices.size(), GL_UNSIGNED_INT, nullptr);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         // Pop Matrix
         objectPosition = glm::vec3(0.0f, 0.0f, 0.0f);
         mvpMatrix = projectionMatrix * viewMatrix * glm::translate(glm::mat4(1.0f), objectPosition);
-        
-        
 
         // Apply spring forces
 
